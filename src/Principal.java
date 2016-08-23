@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -34,21 +37,32 @@ public class Principal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         cmdCalcular = new javax.swing.JButton();
+        cmdBorrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Numero de Horas Trabajadas");
+        jLabel1.setText("Ingrese Horas Trabajadas");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 180, 20));
+
+        txtHoras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHorasKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 110, -1));
 
         jLabel2.setText("Descuento caja de ahorro");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 150, 20));
+
+        txtDesc.setEditable(false);
         jPanel1.add(txtDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 110, -1));
 
         jLabel3.setText("Monto Total");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 130, 20));
+
+        txtTotal.setEditable(false);
         jPanel1.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 110, -1));
 
         cmdCalcular.setText("Calcular");
@@ -59,15 +73,27 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
+        cmdBorrar.setText("Borrar");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 80, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -77,6 +103,11 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         String res, desc;
         double horas, descu, mult, total;
+        
+        if (txtHoras.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite por favor el número de Horas", "Error", JOptionPane.ERROR_MESSAGE);
+            txtHoras.requestFocusInWindow();
+        } else {
         
         horas = Double.parseDouble(txtHoras.getText());
         
@@ -89,8 +120,27 @@ public class Principal extends javax.swing.JFrame {
         
         txtDesc.setText(desc);
         txtTotal.setText(res);
-        
+        }
     }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+        // TODO add your handling code here:
+        
+        txtHoras.setText("");
+        txtDesc.setText("");
+        txtTotal.setText("");
+        txtHoras.requestFocusInWindow();
+    }//GEN-LAST:event_cmdBorrarActionPerformed
+
+    private void txtHorasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHorasKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+         if (!Character.isDigit(c)) {
+              getToolkit().beep();
+              evt.consume();
+         }
+        
+    }//GEN-LAST:event_txtHorasKeyTyped
 
     /**
      * @param args the command line arguments
@@ -128,6 +178,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cmdBorrar;
     private javax.swing.JButton cmdCalcular;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
